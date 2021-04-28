@@ -1,6 +1,5 @@
 package br.com.academy.lais.mercadolivre.Seguranca;
 
-import br.com.academy.lais.mercadolivre.Usuario.UsuarioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

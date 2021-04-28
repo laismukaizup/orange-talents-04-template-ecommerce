@@ -5,8 +5,6 @@ import br.com.academy.lais.mercadolivre.Validacao.UniqueValue;
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class CategoriaRequest {

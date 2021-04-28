@@ -2,7 +2,6 @@ package br.com.academy.lais.mercadolivre.Usuario;
 
 import br.com.academy.lais.mercadolivre.Validacao.UniqueValue;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
