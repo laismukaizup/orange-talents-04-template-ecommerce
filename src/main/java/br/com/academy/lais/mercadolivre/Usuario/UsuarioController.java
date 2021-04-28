@@ -17,7 +17,6 @@ public class UsuarioController {
     UsuarioRepository usuarioRepository;
 
     @PostMapping
-    @Transactional
     public String cadastrar(@RequestBody @Valid UsuarioRequest usuarioRequest){
         Usuario usuario = usuarioRequest.converter();
         usuarioRepository.save(usuario);
