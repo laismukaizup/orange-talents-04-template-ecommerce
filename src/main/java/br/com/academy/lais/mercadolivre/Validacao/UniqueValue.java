@@ -1,4 +1,4 @@
-package br.com.academy.lais.mercadolivre;
+package br.com.academy.lais.mercadolivre.Validacao;
 
 
 import javax.validation.Constraint;

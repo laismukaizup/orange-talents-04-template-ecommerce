@@ -1,6 +1,6 @@
 package br.com.academy.lais.mercadolivre.Usuario;
 
-import br.com.academy.lais.mercadolivre.UniqueValue;
+import br.com.academy.lais.mercadolivre.Validacao.UniqueValue;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -38,7 +38,10 @@ public class UsuarioRequest {
     }
 
     public Usuario converter() {
-        String senhaEncoded = new BCryptPasswordEncoder().encode(senha);
-        return new Usuario(login, senhaEncoded, dataCriacao);
+        return new Usuario(login, codificaSenha(senha), dataCriacao);
+    }
+
+    public String codificaSenha(String senha){
+        return new BCryptPasswordEncoder().encode(senha);
     }
 }

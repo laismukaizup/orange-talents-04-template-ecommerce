@@ -1,13 +1,11 @@
 package br.com.academy.lais.mercadolivre.Usuario;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -15,14 +13,14 @@ import javax.validation.Valid;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    @PersistenceContext
-    EntityManager entityManager;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @PostMapping
     @Transactional
     public String cadastrar(@RequestBody @Valid UsuarioRequest usuarioRequest){
         Usuario usuario = usuarioRequest.converter();
-        entityManager.persist(usuario);
+        usuarioRepository.save(usuario);
         return usuario.toString();
     }
 }

@@ -1,6 +1,5 @@
 package br.com.academy.lais.mercadolivre.Usuario;
 
-import br.com.academy.lais.mercadolivre.UniqueValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
