@@ -28,4 +28,5 @@ public class CaracteristicaRequest {
     public String getDescricao() {
         return descricao;
     }
+
 }

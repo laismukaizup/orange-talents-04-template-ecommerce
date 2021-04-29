@@ -36,16 +36,6 @@ public class Usuario implements UserDetails {
         this.dataCriacao = dataCriacao;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", dataCriacao=" + dataCriacao +
-                '}';
-    }
-
     public Long getId() {
         return id;
     }
