@@ -29,12 +29,12 @@ public class ImagemProdutoRequest {
         Optional<Usuario> usuarioLogado = (Optional<Usuario>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<String> listaImagens = new ArrayList<>();
         if (usuarioLogado.isPresent()) {
-            if (usuarioLogado.get() == produto.getUsuario()) {
+            if (usuarioLogado.get().getId() == produto.getUsuario().getId()) {
 
                 listaImagens = imagens.stream().map(i -> i.getOriginalFilename())
                         .collect(Collectors.toList());
-            }
-            Assert.state(usuarioLogado.get() == produto.getUsuario(), "Usuário logado é diferente do usuário dono do produto");
+            } else
+                Assert.state(usuarioLogado.get() != produto.getUsuario(), "Usuário logado é diferente do usuário dono do produto");
         } else
             Assert.isNull("Usuário não cadastrado.");
 

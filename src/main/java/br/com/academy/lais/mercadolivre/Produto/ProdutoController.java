@@ -45,6 +45,7 @@ public class ProdutoController {
     }
 
     @PostMapping(value = "{id}/imagens")
+    @Transactional
     public String insereImage(@PathVariable("id") Long id, @Valid ImagemProdutoRequest imagemProdutoRequest) {
 
         Produto produto = entityManager.find(Produto.class, id);
