@@ -1,13 +1,12 @@
 package br.com.academy.lais.mercadolivre.Produto;
 
 import br.com.academy.lais.mercadolivre.Categoria.Categoria;
-import br.com.academy.lais.mercadolivre.Categoria.CategoriaRepository;
 import br.com.academy.lais.mercadolivre.Usuario.Usuario;
-import br.com.academy.lais.mercadolivre.Usuario.UsuarioRepository;
 import br.com.academy.lais.mercadolivre.Validacao.ExistValue;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.Assert;
 
+import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -15,7 +14,6 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ProdutoRequest {
     @NotBlank
@@ -23,9 +21,11 @@ public class ProdutoRequest {
     @NotNull
     @Positive
     private String valor;
-    @NotNull @Positive
+    @NotNull
+    @Positive
     private String qtde;
-    @NotBlank @Size(max = 1000)
+    @NotBlank
+    @Size(max = 1000)
     private String descricao;
     @NotNull
     @ExistValue(fieldName = "id", domainClass = Categoria.class, message = "Não existe categoria cadastrada com essse id.")
@@ -44,7 +44,7 @@ public class ProdutoRequest {
     }
 
     public ProdutoRequest(String nome, String valor, String qtde, String descricao, Long idCategoria,
-                          Long idUsuario,List<CaracteristicaRequest> caracteristicas) {
+                          Long idUsuario, List<CaracteristicaRequest> caracteristicas) {
         this.nome = nome;
         this.valor = valor;
         this.qtde = qtde;
@@ -54,18 +54,13 @@ public class ProdutoRequest {
         this.caracteristicas = caracteristicas;
     }
 
-    public Produto converter(CategoriaRepository categoriaRepository, UsuarioRepository usuarioRepository) {
-        Optional<Categoria> categoria = categoriaRepository.findById(idCategoria);
-        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-        if (categoria.isPresent() && usuario.isPresent())
-            return new Produto(nome, valor, qtde, descricao, categoria.get(),usuario.get(), dataCriacao);
+    public Produto converter(EntityManager entityManager) {
+        Categoria categoria = entityManager.find(Categoria.class, idCategoria);
+        Assert.notNull(categoria, "Categoria não pode ser nulo");
+        Usuario Usuario = entityManager.find(Usuario.class, idUsuario);
+        Assert.notNull(categoria, "Usuario não pode ser nulo.");
 
-        if (categoria.isEmpty())
-        Assert.isNull(categoria, "Não existe categoria com esse id");
-        if (usuario.isEmpty())
-        Assert.isNull(usuario, "Não existe usuário com esse id");
-
-        return null;
+        return new Produto(nome, valor, qtde, descricao, categoria, Usuario, dataCriacao);
     }
 
     public boolean temCaracteristicasIguais() {

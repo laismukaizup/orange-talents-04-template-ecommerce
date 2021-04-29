@@ -1,33 +1,23 @@
 package br.com.academy.lais.mercadolivre.Produto;
 
-import br.com.academy.lais.mercadolivre.Categoria.CategoriaRepository;
-import br.com.academy.lais.mercadolivre.Usuario.Usuario;
-import br.com.academy.lais.mercadolivre.Usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController {
-    
-    @Autowired
-    ProdutoRepository produtoRepository;
-    @Autowired
-    UsuarioRepository usuarioRepository;
-    @Autowired
-    CategoriaRepository categoriaRepository;
-    @Autowired
-    CaracteristicaRepository caracteristicaRepository;
-    @Autowired
-    ImagemProdutoRepository imagemProdutoRepository;
+
+    @PersistenceContext
+    EntityManager entityManager;
     @Autowired
     ProibeCaracteristicasIguaisParaOMesmoProdutoValidator proibeCaracteristicasIguaisParaOMesmoProdutoValidator;
 
@@ -36,45 +26,35 @@ public class ProdutoController {
         webDataBinder.addValidators(proibeCaracteristicasIguaisParaOMesmoProdutoValidator);
     }
 
-
     @PostMapping
+    @Transactional
     public String cadastrar(@RequestBody @Valid ProdutoRequest produtoRequest) {
 
-        Produto produto = produtoRequest.converter(categoriaRepository, usuarioRepository);
+        Produto produto = produtoRequest.converter(entityManager);
+        Assert.notNull(produto, "Produto não pode ser nulo.");
 
         List<Caracteristica> caracteristicaList = produtoRequest.getCaracteristicas().stream()
                 .map(Caracteristica::new).collect(Collectors.toList());
 
         for (Caracteristica caracteristica : caracteristicaList) {
             caracteristica.setProduto(produto);
+            entityManager.persist(caracteristica);
         }
-        produtoRepository.save(produto);
-        caracteristicaRepository.saveAll(caracteristicaList);
+        entityManager.persist(produto);
         return "cadastrado";
     }
 
     @PostMapping(value = "{id}/imagens")
     public String insereImage(@PathVariable("id") Long id, @Valid ImagemProdutoRequest imagemProdutoRequest) {
 
-        Optional<Produto> produto = produtoRepository.findById(id);
-        if (produto.isPresent()) {
-            Optional<Usuario> usuarioLogado = (Optional<Usuario>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (usuarioLogado.isPresent()) {
-                if (usuarioLogado.get() == produto.get().getUsuario()) {
+        Produto produto = entityManager.find(Produto.class, id);
+        Assert.notNull(produto, "Produto não pode ser nulo.");
 
-                    List<String> listaImagens = imagemProdutoRequest.getImagens().stream().map(i -> i.getOriginalFilename())
-                            .collect(Collectors.toList());
-
-                    List<ImagemProduto> imagemProdutoList = listaImagens.stream().map(i -> new ImagemProduto(i, produto.get()))
-                            .collect(Collectors.toList());
-
-                    imagemProdutoRepository.saveAll(imagemProdutoList);
-                    return "inserido";
-                }
-                return "Produto não é do usuário logado";
-            }
-            return "usuário não existe";
+        List<ImagemProduto> imagemProdutoList = imagemProdutoRequest.converter(produto);
+        for (ImagemProduto imagem: imagemProdutoList) {
+            entityManager.persist(imagem);
         }
-        return "Id do produto não cadastrado";
+
+        return "inserido";
     }
 }
