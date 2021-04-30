@@ -22,19 +22,6 @@ public class UsuarioRequest {
     public UsuarioRequest(String email, String senha) {
         this.email = email;
         this.senha = senha;
-        this.dataCriacao = dataCriacao;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
     }
 
     public Usuario converter() {
