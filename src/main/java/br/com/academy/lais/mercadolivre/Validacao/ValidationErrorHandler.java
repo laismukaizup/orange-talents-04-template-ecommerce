@@ -30,4 +30,23 @@ public class ValidationErrorHandler {
         });
         return dto;
     }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public List<ValidationErrorOutputRequest> handle(IllegalArgumentException exception) {
+        List<ValidationErrorOutputRequest> dto = new ArrayList<>();
+        dto.add(new ValidationErrorOutputRequest("", exception.getMessage()));
+        return dto;
+    }
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalStateException.class)
+    public List<ValidationErrorOutputRequest> handle(IllegalStateException exception) {
+        List<ValidationErrorOutputRequest> dto = new ArrayList<>();
+        dto.add(new ValidationErrorOutputRequest(exception.getClass().toString(), exception.getMessage()));
+        return dto;
+    }
+
+
+
+
 }
