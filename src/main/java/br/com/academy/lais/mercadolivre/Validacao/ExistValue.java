@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ FIELD })
 @Retention(RUNTIME)
 public @interface ExistValue {
-    String message() default "{Dado não existe no banco }";
+    String message() default "{{0} não existe no banco }";
 
     Class<?>[] groups() default {};
 

@@ -31,7 +31,7 @@ public class ProdutoController {
     public String cadastrar(@RequestBody @Valid ProdutoRequest produtoRequest) {
 
         Produto produto = produtoRequest.converter(entityManager);
-        Assert.notNull(produto, "Produto não pode ser nulo.");
+        Assert.notNull(produto, "Produto não existe no banco de dados.");
 
         List<Caracteristica> caracteristicaList = produtoRequest.getCaracteristicas().stream()
                 .map(Caracteristica::new).collect(Collectors.toList());
