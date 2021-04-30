@@ -16,6 +16,8 @@ public class Pergunta {
     private Long id;
     @NotBlank
     private String titulo;
+    @NotBlank
+    private String descricao;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:MM")
     private LocalDateTime dataCriacao;
     @ManyToOne
@@ -25,8 +27,9 @@ public class Pergunta {
     private Produto produto;
 
 
-    public Pergunta(String titulo,LocalDateTime dataCriacao) {
+    public Pergunta(String titulo,String descricao,LocalDateTime dataCriacao) {
         this.titulo = titulo;
+        this.descricao = descricao;
         this.dataCriacao = dataCriacao;
     }
 
