@@ -1,5 +1,9 @@
 package br.com.academy.lais.mercadolivre.Produto;
 
+import br.com.academy.lais.mercadolivre.Caracteristica.Caracteristica;
+import br.com.academy.lais.mercadolivre.Caracteristica.ProibeCaracteristicasIguaisParaOMesmoProdutoValidator;
+import br.com.academy.lais.mercadolivre.ImagemProduto.ImagemProduto;
+import br.com.academy.lais.mercadolivre.ImagemProduto.ImagemProdutoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.WebDataBinder;

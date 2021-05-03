@@ -1,4 +1,4 @@
-package br.com.academy.lais.mercadolivre.Produto;
+package br.com.academy.lais.mercadolivre.ImagemProduto;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,5 +1,6 @@
-package br.com.academy.lais.mercadolivre.Produto;
+package br.com.academy.lais.mercadolivre.ImagemProduto;
 
+import br.com.academy.lais.mercadolivre.Produto.Produto;
 import br.com.academy.lais.mercadolivre.Usuario.Usuario;
 import io.jsonwebtoken.lang.Assert;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,15 +29,17 @@ public class ImagemProdutoRequest {
     public List<ImagemProduto> converter(Produto produto) {
         Optional<Usuario> usuarioLogado = (Optional<Usuario>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<String> listaImagens = new ArrayList<>();
-        if (usuarioLogado.isPresent()) {
-            if (usuarioLogado.get().getId() == produto.getUsuario().getId()) {
-
-                listaImagens = imagens.stream().map(i -> i.getOriginalFilename())
-                        .collect(Collectors.toList());
-            } else
-                Assert.state(usuarioLogado.get() != produto.getUsuario(), "Usuário logado é diferente do usuário dono do produto");
-        } else
+        if (usuarioLogado.isEmpty())
             Assert.isNull("Usuário não cadastrado.");
+
+
+        if (usuarioLogado.get().getId() == produto.getUsuario().getId()) {
+
+            listaImagens = imagens.stream().map(i -> i.getOriginalFilename())
+                    .collect(Collectors.toList());
+        } else
+            Assert.state(usuarioLogado.get() == produto.getUsuario(), "Usuário logado é diferente do usuário dono do produto");
+
 
         return listaImagens.stream().map(i -> new ImagemProduto(i, produto))
                 .collect(Collectors.toList());

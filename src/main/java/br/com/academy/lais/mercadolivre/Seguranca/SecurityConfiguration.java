@@ -4,6 +4,7 @@ import br.com.academy.lais.mercadolivre.Usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -40,7 +41,14 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.POST, "/auth").permitAll()
+//                .antMatchers(HttpMethod.POST, "/usuario").permitAll()
+//                .antMatchers(HttpMethod.POST, "/categoria").permitAll()
+//                .antMatchers(HttpMethod.POST, "/caracteristica").permitAll()
+//                .antMatchers(HttpMethod.POST, "/produto").permitAll()
+//                .antMatchers(HttpMethod.POST, "/produto/**").permitAll()
+//                .antMatchers(HttpMethod.POST, "/pergunta/*").permitAll()
+//                .antMatchers(HttpMethod.POST, "/opiniaoProduto/*").permitAll()
                 .anyRequest().authenticated().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository),

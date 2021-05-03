@@ -1,5 +1,6 @@
-package br.com.academy.lais.mercadolivre.Produto;
+package br.com.academy.lais.mercadolivre.Caracteristica;
 
+import br.com.academy.lais.mercadolivre.Produto.ProdutoRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.validation.Errors;

@@ -43,8 +43,8 @@ public class PerguntaController {
         String corpoEmail = "De: "+ usuarioLogado.get().getUsername();
         corpoEmail += " / Mensagem: " + perguntaRequest.getDescricao() +"";
 
-        Email email = new Email(produto.getUsuario().getUsername(), perguntaRequest.getTitulo(), corpoEmail);
-        emailService.sendEmail(email);
+        //Email email = new Email(produto.getUsuario().getUsername(), perguntaRequest.getTitulo(), corpoEmail);
+        //emailService.sendEmail(email);
 
         return "cadastrado e email enviado";
     }

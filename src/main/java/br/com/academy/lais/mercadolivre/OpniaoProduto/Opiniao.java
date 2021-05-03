@@ -25,6 +25,12 @@ public class Opiniao {
     private Usuario usuario;
     @NotNull @ManyToOne
     private Produto produto;
+    private Double mediaNotas;
+
+    @Deprecated
+    public  Opiniao(){
+
+    }
 
     public Opiniao(String titulo, String descricao, Integer nota, Usuario usuario) {
         this.titulo = titulo;
@@ -33,8 +39,34 @@ public class Opiniao {
         this.usuario = usuario;
     }
 
+
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Integer getNota() {
+        return nota;
+    }
+
+    public void setNota(Integer nota) {
+        this.nota = nota;
     }
 
 }

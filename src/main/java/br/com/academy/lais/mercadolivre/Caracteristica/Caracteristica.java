@@ -1,6 +1,6 @@
-package br.com.academy.lais.mercadolivre.Produto;
+package br.com.academy.lais.mercadolivre.Caracteristica;
 
-import br.com.academy.lais.mercadolivre.Categoria.CategoriaRequest;
+import br.com.academy.lais.mercadolivre.Produto.Produto;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -18,6 +18,11 @@ public class Caracteristica {
     @JoinColumn(name="produto_id")
     private Produto produto;
 
+    @Deprecated
+    public Caracteristica(){
+
+    }
+
     public Caracteristica(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
@@ -31,5 +36,21 @@ public class Caracteristica {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

@@ -26,6 +26,8 @@ public class Pergunta {
     @ManyToOne @NotNull
     private Produto produto;
 
+    @Deprecated
+    public Pergunta(){}
 
     public Pergunta(String titulo,String descricao,LocalDateTime dataCriacao) {
         this.titulo = titulo;
@@ -40,4 +42,29 @@ public class Pergunta {
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
 }

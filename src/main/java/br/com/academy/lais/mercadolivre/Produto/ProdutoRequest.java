@@ -1,5 +1,6 @@
 package br.com.academy.lais.mercadolivre.Produto;
 
+import br.com.academy.lais.mercadolivre.Caracteristica.CaracteristicaRequest;
 import br.com.academy.lais.mercadolivre.Categoria.Categoria;
 import br.com.academy.lais.mercadolivre.Usuario.Usuario;
 import br.com.academy.lais.mercadolivre.Validacao.ExistValue;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class ProdutoRequest {
     private String nome;
     @NotNull
     @Positive
-    private String valor;
+    private BigDecimal valor;
     @NotNull
     @Positive
     private String qtde;
@@ -43,7 +45,7 @@ public class ProdutoRequest {
         return caracteristicas;
     }
 
-    public ProdutoRequest(String nome, String valor, String qtde, String descricao, Long idCategoria,
+    public ProdutoRequest(String nome, BigDecimal valor, String qtde, String descricao, Long idCategoria,
                           Long idUsuario, List<CaracteristicaRequest> caracteristicas) {
         this.nome = nome;
         this.valor = valor;

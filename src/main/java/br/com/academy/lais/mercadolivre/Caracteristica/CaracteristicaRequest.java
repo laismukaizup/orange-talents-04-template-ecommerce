@@ -1,9 +1,6 @@
-package br.com.academy.lais.mercadolivre.Produto;
-
-import org.hibernate.validator.constraints.Length;
+package br.com.academy.lais.mercadolivre.Caracteristica;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class CaracteristicaRequest {
