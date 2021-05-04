@@ -30,7 +30,7 @@ public class Produto {
     private BigDecimal valor;
     @NotNull
     @Positive
-    private String qtde;
+    private Integer qtde;
     @NotBlank
     @Size(max = 1000)
     private String descricao;
@@ -52,6 +52,7 @@ public class Produto {
     private Set<Caracteristica> caracteristicas = new HashSet<>();
     @OneToMany(mappedBy = "produto",fetch=FetchType.EAGER)
     private Set<Pergunta> perguntas = new HashSet<>();
+
 
     public Set<Opiniao> getOpinioes() {
         return opinioes;
@@ -85,7 +86,7 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(String nome, BigDecimal valor, String qtde, String descricao, Categoria categoria,
+    public Produto(String nome, BigDecimal valor, Integer qtde, String descricao, Categoria categoria,
                    Usuario usuario, LocalDateTime dataCriacao) {
         this.nome = nome;
         this.valor = valor;
@@ -98,5 +99,21 @@ public class Produto {
 
     public Usuario getUsuario() {
         return usuario;
+    }
+
+    public Integer getQtde() {
+        return qtde;
+    }
+
+    public void setQtde(Integer qtde) {
+        this.qtde = qtde;
+    }
+
+    public boolean abateEstque(Integer qtdeComprada) {
+        if(qtde >= qtdeComprada) {
+            this.qtde -= qtdeComprada;
+        return true;
+        }
+        return false;
     }
 }

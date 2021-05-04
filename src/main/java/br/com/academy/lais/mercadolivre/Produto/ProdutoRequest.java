@@ -25,7 +25,7 @@ public class ProdutoRequest {
     private BigDecimal valor;
     @NotNull
     @Positive
-    private String qtde;
+    private Integer qtde;
     @NotBlank
     @Size(max = 1000)
     private String descricao;
@@ -45,7 +45,7 @@ public class ProdutoRequest {
         return caracteristicas;
     }
 
-    public ProdutoRequest(String nome, BigDecimal valor, String qtde, String descricao, Long idCategoria,
+    public ProdutoRequest(String nome, BigDecimal valor, Integer qtde, String descricao, Long idCategoria,
                           Long idUsuario, List<CaracteristicaRequest> caracteristicas) {
         this.nome = nome;
         this.valor = valor;

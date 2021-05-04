@@ -8,6 +8,7 @@ import br.com.academy.lais.mercadolivre.Produto.Produto;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class ProdutoResponse {
@@ -33,8 +34,8 @@ public class ProdutoResponse {
         this.caracteristicas = p.getCaracteristicas();
         this.perguntas = p.getPerguntas();
         this.totalNotas = p.getOpinioes().size();
-        this.mediaNotas = p.getOpinioes().stream().mapToDouble(o -> o.getNota()).average().getAsDouble();
-
+        this.mediaNotas = p.getOpinioes().size() == 1 ? p.getOpinioes().stream().findFirst().get().getNota()
+                : p.getOpinioes().stream().mapToDouble(o -> o.getNota()).average().getAsDouble();
     }
 
     public String getNome() {

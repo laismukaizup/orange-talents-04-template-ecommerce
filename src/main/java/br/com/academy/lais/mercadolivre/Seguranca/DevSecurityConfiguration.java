@@ -18,8 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 @Configuration
-@Profile("prod")
-public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
+@Profile("dev")
+public class DevSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private AutenticacaoService autenticacaoService;
 
@@ -42,14 +42,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth").permitAll().antMatchers(HttpMethod.POST, "/auth").permitAll()
-//                .antMatchers(HttpMethod.POST, "/usuario").permitAll()
-//                .antMatchers(HttpMethod.POST, "/categoria").permitAll()
-//                .antMatchers(HttpMethod.POST, "/caracteristica").permitAll()
-//                .antMatchers(HttpMethod.POST, "/produto").permitAll()
-//                .antMatchers(HttpMethod.POST, "/produto/**").permitAll()
-//                .antMatchers(HttpMethod.POST, "/pergunta/*").permitAll()
-//                .antMatchers(HttpMethod.POST, "/opiniaoProduto/*").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository),

@@ -25,6 +25,7 @@ public class OpiniaoRequest {
     }
 
     public Opiniao toModel() {
+
         Optional<Usuario> usuarioLogado = (Optional<Usuario>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (usuarioLogado.isEmpty())
             Assert.isNull("Usuário não cadastrado.");
