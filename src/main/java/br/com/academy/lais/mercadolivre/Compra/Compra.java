@@ -21,7 +21,7 @@ public class Compra {
     public BigDecimal valor;
     @NotNull @ManyToOne
     public Usuario usuario;
-    public Gateway gatway;
+    public Gateway gateway;
     public Status status;
 
     @Deprecated
@@ -31,19 +31,19 @@ public class Compra {
         return id;
     }
 
-    public Compra(Produto produto, Integer qtde, BigDecimal valor, Usuario usuario, Gateway gatway, Status status) {
+    public Compra(Produto produto, Integer qtde, BigDecimal valor, Usuario usuario, Gateway gateway, Status status) {
         this.produto = produto;
         this.qtde = qtde;
         this.valor = valor;
         this.usuario = usuario;
-        this.gatway = gatway;
+        this.gateway = gateway;
         this.status = status;
     }
 
 
 
     public String retornoURL(UriComponentsBuilder uriComponentsBuilder) {
-        return gatway.criaRetorno(this, uriComponentsBuilder);
+        return gateway.criaRetorno(this, uriComponentsBuilder);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Compra {
                 ", qtde=" + qtde +
                 ", valor=" + valor +
                 ", usuario=" + usuario +
-                ", gatway='" + gatway + '\'' +
+                ", gatway='" + gateway + '\'' +
                 '}';
     }
 
