@@ -1,5 +1,7 @@
 package br.com.academy.lais.mercadolivre.Compra;
 
+import br.com.academy.lais.mercadolivre.EnvioEmail.Email;
+import br.com.academy.lais.mercadolivre.EnvioEmail.EmailService;
 import br.com.academy.lais.mercadolivre.Produto.Produto;
 import br.com.academy.lais.mercadolivre.Usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class CompraController {
     @Autowired
     ProibeCompraDeProdutoSemEstoque proibeCaracteristicasIguaisParaOMesmoProdutoValidator;
 
+    @Autowired
+    EmailService emailService;
+
     @InitBinder()
     public void init(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(proibeCaracteristicasIguaisParaOMesmoProdutoValidator);
@@ -47,6 +52,14 @@ public class CompraController {
             if(abateu) {
                 entityManager.persist(produto);
                 entityManager.persist(compra);
+
+                String corpoEmail = "De: "+ usuarioLogado.get().getUsername();
+                corpoEmail += " / Mensagem: ";
+
+                Email email = new Email(produto.getUsuario().getUsername(), "Compra efetuada", corpoEmail);
+                emailService.sendEmail(email);
+
+
                 return compra.retornoURL(uriComponentsBuilder);
             }
             BindException problemaComEstoque = new BindException(compraRequest,

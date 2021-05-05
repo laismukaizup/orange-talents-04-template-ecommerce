@@ -1,13 +1,18 @@
 package br.com.academy.lais.mercadolivre.Compra;
 
+import br.com.academy.lais.mercadolivre.Pagamento.Pagamento;
+import br.com.academy.lais.mercadolivre.Pagamento.RetornoPagamento;
 import br.com.academy.lais.mercadolivre.Produto.Produto;
 import br.com.academy.lais.mercadolivre.Usuario.Usuario;
+import io.jsonwebtoken.lang.Assert;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Compra {
@@ -22,7 +27,9 @@ public class Compra {
     @NotNull @ManyToOne
     public Usuario usuario;
     public Gateway gateway;
-    public Status status;
+    public StatusCompra status;
+    @OneToMany(mappedBy = "compra",fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    public Set<Pagamento> pagamentos = new HashSet<>();
 
     @Deprecated
     public Compra(){}
@@ -31,7 +38,7 @@ public class Compra {
         return id;
     }
 
-    public Compra(Produto produto, Integer qtde, BigDecimal valor, Usuario usuario, Gateway gateway, Status status) {
+    public Compra(Produto produto, Integer qtde, BigDecimal valor, Usuario usuario, Gateway gateway, StatusCompra status) {
         this.produto = produto;
         this.qtde = qtde;
         this.valor = valor;
@@ -40,7 +47,9 @@ public class Compra {
         this.status = status;
     }
 
-
+    public Produto getProduto() {
+        return produto;
+    }
 
     public String retornoURL(UriComponentsBuilder uriComponentsBuilder) {
         return gateway.criaRetorno(this, uriComponentsBuilder);
@@ -59,5 +68,11 @@ public class Compra {
     }
 
 
+    public void atualizaStatus(Pagamento pagamento) {
 
+        this.pagamentos.add(pagamento);
+        boolean statusPagamentoSucessso = pagamento.statusPagamentoSucessso();
+        this.status = statusPagamentoSucessso ? StatusCompra.SUCESSO : StatusCompra.ERRO;
+
+    }
 }

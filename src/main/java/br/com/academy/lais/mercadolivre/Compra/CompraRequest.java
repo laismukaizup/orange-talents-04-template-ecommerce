@@ -14,7 +14,7 @@ public class CompraRequest {
     public BigDecimal valor;
     public Long idUsuario;
     public Gateway gateway;
-    public Status status = Status.Iniciado;
+    public StatusCompra status = StatusCompra.INICIADO;
 
     public CompraRequest(Long idProduto, Integer qtde, BigDecimal valor, Long idUsuario, Gateway gateway) {
         this.idProduto = idProduto;
